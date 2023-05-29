@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"&amp;gt;>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Challenge Encriptador</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
+    <link href="encriptar.html">
+</head>
+
+<body class="principal">
+
+    <!--Imagen logo alura-->
+    <header>
+        <img src="imagenes/Vector.png" class="aluraLogo">
+    </header>
+
+    <main>
+
+        <!--Cuadro de entrada-->
+
+        <!--Campo para ingresar texto -->
+        <textarea required placeholder="Ingrese el texto aquí" class="inputText" id="myTextarea1"></textarea>
+    
+        <!--Botones y advertencia-->
+        <ul class="advertencia">
+            <li><img src="imagenes/simbolo.png"></li>
+            <li class="margen"><p>Solo letras minúsculas y sin acentos</p></li>
+        </ul>
+
+        <ul class="botones" >
+            <li><button class="boton1" id="botton1">Encriptar</button></li>
+            <li><button class="boton2" id="botton2">Desencriptar</button></li>
+        </ul>
+
+        <!--Cuadro de respuesta -->
+
+        <!--Sin respuesta -->
+        
+        <div id="noTexto">
+            <ul class="outputText1">
+                <li><img src="imagenes/Muñeco.png"></li>
+                <li class="texto1"><p>Ningún mensaje fue encontrado</p></li>
+                <li class="texto2"><p>Ingresa el texto que desees encriptar o desencritpar</p></li>
+            </ul>
+        </div>
+
+        <!--Con respuesta-->
+        <div id="conTexto">
+            <ul class="outputText2">
+                <textarea class="texto3" id="myTextarea2" disabled></textarea>
+            </ul>
+            <button class="boton3" id="botton3">Copiar</button>
+        </div>
+    </main>
+    
+</body>
+
+<footer class="pieDePagina">
+    <span class="socialMedia">
+        <ul class="lista">
+            <li class="a">AlumniONE-G5: Francisco Alonso Gallegos Montesinos</li>
+            <li class="b">
+                <ul>
+                    <li><a class="facebook" href="https://www.facebook.com/gallegos1998">Facebook</a></li>
+                    <li><a class="twitter" href="https://twitter.com/Francis36097293">Twitter</a></li>
+                    <li><a class="linkedin" href="https://www.linkedin.com/in/francisco-gallegos-/">LinkedIn</a></li>
+                </ul>
+            </li>
+            <li class="c">Copyright © 2023 All Rights Reserved by Alura.</li>
+        </ul>
+        <img src="imagenes/logoOracleAlura.svg" class="oracleAlura" >
+    </span>
+</footer>
+</html>
+
+<script>
+
+    const textarea = document.getElementById("myTextarea1");
+    var cuadroRespuesta = document.querySelector("#myTextarea2");
+    var divNoTexto= document.querySelector("#noTexto");
+    var divConTexto= document.querySelector("#conTexto");
+    var botonEncriptar = document.querySelector("#botton1");
+    var botonDesencriptar = document.querySelector("#botton2");
+    var botonCopiar = document.querySelector("#botton3");
+    var original = ["e","i","a","o", "u"], modificado = ["enter","imes","ai",  "ober", "ufat"];
+    var cuadroTexto = "";
+
+    /*Funcion para que el usuario no escriba carácteres especiales o tildes*/
+    textarea.addEventListener("input", function() {
+        const pattern = /^[a-z\s]+$/;
+        if (!pattern.test(textarea.value)) {
+            textarea.value = textarea.value.replace(/[^a-z\s]/g, "").toLowerCase();
+        }
+    });
+
+    /*Función para que el textarea2 se oculte*/
+    function hideBlock() {
+        divNoTexto.style.display = "flex"
+        divConTexto.style.display = "none"
+    }
+
+    function encriptar() {
+        cuadroTexto = textarea.value;
+        if (cuadroTexto == "") {
+            hideBlock()
+        } else {
+            divNoTexto.style.display = "none";
+            divConTexto.style.display = "flex";
+        }
+        for (let i = 0; i < original.length; i++) {
+            cuadroTexto = cuadroTexto.replaceAll(original[i], modificado[i]);
+        
+        }
+        cuadroRespuesta.textContent = cuadroTexto
+    }
+
+    function desencriptar() {
+        cuadroTexto = textarea.value;
+        if (cuadroTexto == "") {
+            hideBlock()
+        } else {
+            divNoTexto.style.display = "none";
+            divConTexto.style.display = "flex";
+        }
+        for (let i = 0; i < original.length; i++) {
+            cuadroTexto = cuadroTexto.replaceAll(modificado[i],original[i]);
+            
+        }
+        cuadroRespuesta.textContent = cuadroTexto
+    }
+
+    function copiar() {
+        navigator.clipboard.writeText(cuadroRespuesta.textContent)
+    }
+
+    hideBlock();
+    botonEncriptar.onclick = encriptar;
+    botonDesencriptar.onclick = desencriptar;
+    botonCopiar.onclick = copiar;
+
+</script>
