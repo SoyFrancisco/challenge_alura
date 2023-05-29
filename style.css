@@ -280,6 +280,10 @@ textarea::placeholder {
     font-size:23px;
 }
 
+.b ul li a{
+    color:white;
+}
+
 .b ul li a:visited{
     color:white;
 }
